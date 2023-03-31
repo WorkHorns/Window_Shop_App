@@ -6,4 +6,4 @@ window.addEventListener('DOMContentLoaded', () => {
     modals();
 });
 
-console.log(10);
+console.log("Все еще работает");
