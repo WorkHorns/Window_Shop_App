@@ -40,6 +40,7 @@ const modals = () => {
                 document.body.style.overflow =''; //Старый функционал
             }
         });
+        
         function closeModalWindow() {
             windows.forEach(item => {
                 item.style.display ='none';
