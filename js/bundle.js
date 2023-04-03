@@ -1,9 +1,9 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./js/Modules/modals.js":
+/***/ "./js/modules/modals.js":
 /*!******************************!*\
-  !*** ./js/Modules/modals.js ***!
+  !*** ./js/modules/modals.js ***!
   \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -19,9 +19,11 @@ const modals = () => {
   //Функция Модального окна
   //Принимает 3 параметра
   function bindModal(triggerSelector, modalSelector, closeSelector) {
+    let closeClickOverlay = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
     const trigger = document.querySelectorAll(triggerSelector),
       modal = document.querySelector(modalSelector),
-      close = document.querySelector(closeSelector);
+      close = document.querySelector(closeSelector),
+      windows = document.querySelectorAll('[data-modal]');
 
     //Парам. Тригера нажатия
     trigger.forEach(item => {
@@ -29,6 +31,7 @@ const modals = () => {
         if (event.target) {
           event.preventDefault();
         }
+        closeModalWindow();
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden'; //Старый функционал
       });
@@ -36,18 +39,27 @@ const modals = () => {
 
     //Парам. Нажатия на крестик
     close.addEventListener('click', () => {
+      closeModalWindow();
       modal.style.display = 'none';
       document.body.style.overflow = ''; //Старый функционал
     });
 
     //Парам. Нажатия на свободную область.
     modal.addEventListener('click', event => {
-      if (event.target === modal) {
+      if (event.target === modal && closeClickOverlay) {
+        closeModalWindow();
         modal.style.display = 'none';
         document.body.style.overflow = ''; //Старый функционал
       }
     });
+
+    function closeModalWindow() {
+      windows.forEach(item => {
+        item.style.display = 'none';
+      });
+    }
   }
+
   //Функция появления модального окна по истечении таймера
   function showModalByTime(selector, time) {
     setTimeout(() => {
@@ -59,6 +71,9 @@ const modals = () => {
   //Вызов функций и передача параметров.
   bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
   bindModal('.phone_link', '.popup', '.popup .popup_close');
+  bindModal('.popup_calc_btn', '.popup_calc', '.popup_calc_close');
+  bindModal('.popup_calc_button', '.popup_calc_profile', '.popup_calc_profile_close', false);
+  bindModal('.popup_calc_profile_button', '.popup_calc_end', '.popup_calc_end_close', false);
   showModalByTime('.popup', 60000);
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (modals);
@@ -116,9 +131,9 @@ const modals = () => {
 
 /***/ }),
 
-/***/ "./js/Modules/tabs.js":
+/***/ "./js/modules/tabs.js":
 /*!****************************!*\
-  !*** ./js/Modules/tabs.js ***!
+  !*** ./js/modules/tabs.js ***!
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -129,7 +144,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 //Переменная табов
 //Версия 1.0
-const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
+const tabs = function (headerSelector, tabSelector, contentSelector, activeClass) {
+  let display = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'block';
   //Функция Табов
   //Принимает 3 параметра
   const header = document.querySelector(headerSelector),
@@ -151,7 +167,7 @@ const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
   function showTabContent() {
     let id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
     //Показываем контент по полученому Id
-    content[id].style.display = 'block';
+    content[id].style.display = display;
     //Добавляем таб по полученому Id
     tab[id].classList.add(activeClass);
   }
@@ -14340,19 +14356,19 @@ var __webpack_exports__ = {};
   \********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./slider */ "./js/slider.js");
-/* harmony import */ var _Modules_modals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Modules/modals */ "./js/Modules/modals.js");
-/* harmony import */ var _Modules_tabs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Modules/tabs */ "./js/Modules/tabs.js");
+/* harmony import */ var _modules_modals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/modals */ "./js/modules/modals.js");
+/* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/tabs */ "./js/modules/tabs.js");
 
 
 
 
 //Добавляем подписку на событие
 window.addEventListener('DOMContentLoaded', () => {
-  (0,_Modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])(); //Событие модальных окон
-  (0,_Modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.glazing_slider', '.glazing_block', '.glazing_content', 'active'); //событие табов с передачей Class и Selector
-  (0,_Modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.decoration_slider', '.no_click', '.decoration_content > div > div', 'after_click'); //событие табов с передачей Class и Selector
+  (0,_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])(); //Событие модальных окон
+  (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.glazing_slider', '.glazing_block', '.glazing_content', 'active'); //событие табов с передачей Class и Selector
+  (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.decoration_slider', '.no_click', '.decoration_content > div > div', 'after_click'); //событие табов с передачей Class и Selector
+  (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', 'inline-block');
 });
-
 console.log("Все еще работает");
 })();
 

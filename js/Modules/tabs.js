@@ -1,6 +1,6 @@
 //Переменная табов
 //Версия 1.0
-const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
+const tabs = (headerSelector, tabSelector, contentSelector, activeClass, display = 'block') => {
     //Функция Табов
     //Принимает 3 параметра
     const header = document.querySelector(headerSelector),
@@ -22,7 +22,7 @@ const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
     //Функция показа по 
     function showTabContent(id = 0) {
         //Показываем контент по полученому Id
-        content[id].style.display = 'block';
+        content[id].style.display = display;
         //Добавляем таб по полученому Id
         tab[id].classList.add(activeClass)
     }
