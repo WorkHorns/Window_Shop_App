@@ -1,7 +1,8 @@
 const forms = () => {
     const form = document.querySelectorAll('form')
-
+ 
     async function sendData(data) {
+       
         return await fetch('/ClassicJS/server.php', {
           method: 'POST',
           headers: { 'Content-Type': 'multipart/form-data' },
@@ -10,18 +11,7 @@ const forms = () => {
       }
     
     function serializeForm(formNode) {
-        const { elements } = formNode
-        
-        const data = new FormData()
-        Array.from(elements)   
-            
-            .map((element) => {
-            const { name, value } = element
-      
-            data.append(name, value)
-          })
-        
-        return data
+        return new FormData(formNode)
     }
 
     form.forEach(item => {

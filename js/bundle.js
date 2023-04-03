@@ -24,18 +24,7 @@ const forms = () => {
     });
   }
   function serializeForm(formNode) {
-    const {
-      elements
-    } = formNode;
-    const data = new FormData();
-    Array.from(elements).map(element => {
-      const {
-        name,
-        value
-      } = element;
-      data.append(name, value);
-    });
-    return data;
+    return new FormData(formNode);
   }
   form.forEach(item => {
     item.addEventListener('submit', event => {
