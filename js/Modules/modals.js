@@ -1,7 +1,8 @@
-// Переменная модального окна с функцией колбека.
+// Переменная модального окна.
 
 //Версия 2.0
 const modals = () => {
+    //Функция Модального окна
     //Принимает 3 параметра
     function bindModal(triggerSelector, modalSelector, closeSelector) {
         const   trigger = document.querySelectorAll(triggerSelector),
@@ -34,7 +35,7 @@ const modals = () => {
             }
         });
     }
-
+    //Функция появления модального окна по истечении таймера
     function showModalByTime(selector, time) {
         setTimeout(() => {
             document.querySelector(selector).style.display = 'block';
@@ -43,10 +44,10 @@ const modals = () => {
         }, time)
     }
 
-    //Вызов функции и передача переменных.
+    //Вызов функций и передача параметров.
     bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
     bindModal('.phone_link', '.popup', '.popup .popup_close');
-    showModalByTime('.popup', 60000)
+    showModalByTime('.popup', 60000) 
 };
 
 export default modals;

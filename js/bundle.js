@@ -12,10 +12,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-// Переменная модального окна с функцией колбека.
+// Переменная модального окна.
 
 //Версия 2.0
 const modals = () => {
+  //Функция Модального окна
   //Принимает 3 параметра
   function bindModal(triggerSelector, modalSelector, closeSelector) {
     const trigger = document.querySelectorAll(triggerSelector),
@@ -47,7 +48,7 @@ const modals = () => {
       }
     });
   }
-
+  //Функция появления модального окна по истечении таймера
   function showModalByTime(selector, time) {
     setTimeout(() => {
       document.querySelector(selector).style.display = 'block';
@@ -55,7 +56,7 @@ const modals = () => {
     }, time);
   }
 
-  //Вызов функции и передача переменных.
+  //Вызов функций и передача параметров.
   bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
   bindModal('.phone_link', '.popup', '.popup .popup_close');
   showModalByTime('.popup', 60000);
@@ -112,6 +113,70 @@ const modals = () => {
 // };
 
 // export default modals;
+
+/***/ }),
+
+/***/ "./js/Modules/tabs.js":
+/*!****************************!*\
+  !*** ./js/Modules/tabs.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//Переменная табов
+//Версия 1.0
+const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
+  //Функция Табов
+  //Принимает 3 параметра
+  const header = document.querySelector(headerSelector),
+    tab = document.querySelectorAll(tabSelector),
+    content = document.querySelectorAll(contentSelector);
+
+  //Функция скрытия
+  function hideTabContent() {
+    //Перебираем контент и скрываем его
+    content.forEach(item => {
+      item.style.display = 'none';
+    });
+    //Перебираем табы и скрываем их
+    tab.forEach(item => {
+      item.classList.remove(activeClass);
+    });
+  }
+  //Функция показа по 
+  function showTabContent() {
+    let id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    //Показываем контент по полученому Id
+    content[id].style.display = 'block';
+    //Добавляем таб по полученому Id
+    tab[id].classList.add(activeClass);
+  }
+  hideTabContent();
+  showTabContent();
+
+  //Подписываемся на события заголовков
+  header.addEventListener('click', event => {
+    const target = event.target;
+    //Проверка на то что элемент выделен
+    if (target && (target.classList.contains(tabSelector.replace(/\./, "")) || target.parentNode.classList.contains(tabSelector.replace(/\./, "")))) {
+      //Проходим по табам 
+      tab.forEach((item, id) => {
+        //Проверяем соответствует ли target и tab.item и получаем id  
+        if (target == item || target.parentNode == item) {
+          //Скрываем весь контент
+          hideTabContent();
+          //Показываем контент связанный с этим Id
+          showTabContent(id);
+        }
+      });
+    }
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (tabs);
 
 /***/ }),
 
@@ -14276,11 +14341,18 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./slider */ "./js/slider.js");
 /* harmony import */ var _Modules_modals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Modules/modals */ "./js/Modules/modals.js");
+/* harmony import */ var _Modules_tabs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Modules/tabs */ "./js/Modules/tabs.js");
 
 
+
+
+//Добавляем подписку на событие
 window.addEventListener('DOMContentLoaded', () => {
-  (0,_Modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  (0,_Modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])(); //Событие модальных окон
+  (0,_Modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.glazing_slider', '.glazing_block', '.glazing_content', 'active'); //событие табов с передачей Class и Selector
+  (0,_Modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.decoration_slider', '.no_click', '.decoration_content > div > div', 'after_click'); //событие табов с передачей Class и Selector
 });
+
 console.log("Все еще работает");
 })();
 
