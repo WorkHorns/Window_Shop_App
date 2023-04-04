@@ -12,25 +12,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _services_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/service */ "./js/services/service.js");
+
 const forms = () => {
   const form = document.querySelectorAll('form');
-  async function sendData(data) {
-    return await fetch('/ClassicJS/server.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-      body: data
-    });
-  }
+  const message = {
+    loading: 'Load',
+    success: 'OK',
+    fail: 'Fail'
+  };
   function serializeForm(formNode) {
+    console.log(message.loading);
     return new FormData(formNode);
   }
   form.forEach(item => {
     item.addEventListener('submit', event => {
       event.preventDefault();
       const data = serializeForm(item);
-      sendData(data);
+      try {
+        console.log(message.success);
+        (0,_services_service__WEBPACK_IMPORTED_MODULE_0__.postData)(data);
+      } catch {
+        console.log(message.fail);
+      }
       console.log(Array.from(data.entries()));
     });
   });
@@ -231,6 +235,40 @@ const tabs = function (headerSelector, tabSelector, contentSelector, activeClass
   });
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (tabs);
+
+/***/ }),
+
+/***/ "./js/services/service.js":
+/*!********************************!*\
+  !*** ./js/services/service.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getResource": () => (/* binding */ getResource),
+/* harmony export */   "postData": () => (/* binding */ postData)
+/* harmony export */ });
+const postData = async data => {
+  const res = await fetch('/ClassicJSserver.php', {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: data
+  });
+  return await res.json();
+};
+async function getResource() {
+  let res = await fetch('/ClassicJS/server.php');
+  if (!res.ok) {
+    throw new Error(`Could not fetch ${url}, status: ${res.status}`);
+  }
+}
+;
+
+
 
 /***/ }),
 
